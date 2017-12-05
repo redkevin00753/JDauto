@@ -11,10 +11,10 @@ class Docker(object):
     	result = os.popen('docker images ' + imagename + '|wc -l')
     	count = int(result.read().strip())
     	if count > 1:
-    		print('image %s Found' % imagename)
+    		print('-> image %s OK' % imagename)
     		return True
     	else:
-    		print('image %s Not Found' % imagename)
+    		print('-> image %s Not Found' % imagename)
     		return False
 	##  deploy to exist
     def deployToExist(war,cname):
@@ -79,9 +79,9 @@ class OS(object):
 		isexists = os.path.exists(path)
 		# os.path.isfile(path)
 		if isexists:
-			print('war exists')
+			print('-> war %s OK' % path)
 			return True
 		else:
-			print('war %s missing' % path)
+			print('-> war %s missing' % path)
 			return False
     	

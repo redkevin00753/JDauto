@@ -29,11 +29,11 @@ def main():
 			sys.exit(1)
 
 def getAvailablePort(portlist):
-	print("check port from " + str(Config.FROM_PORT) + " to " + str(Config.TO_PORT))
+	print("-> check ports from " + str(Config.FROM_PORT) + " to " + str(Config.TO_PORT))
 	for port in range(Config.FROM_PORT,Config.TO_PORT):
 		if port not in portlist:
 			if OS.IsNotUse(port):
-				print('Got one available Port %d' % port)
+				print('-> Got one available Port %d' % port)
 				return(port)
 				break
 	print("can not get a available port !!!")
