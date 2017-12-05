@@ -19,25 +19,43 @@ class Docker(object):
 	##  deploy to exist
     def deployToExist(war,cname):
     	print("deploy to exist done")
+    	# docker run -d --name kevineee -p 9001:9080 -v /var/lib/jenkins/workspace/kevinAuto/projects/epricer-tool/target/epricertools.war:/config/dropins/docker.war websphere-liberty
+    	# commandstr = "docker run -d --name "
+    	# commandstr += cname
+    	# commandstr += " -p " + port + ":9080"
+    	# commandstr += " -v " + war +":/config/dropins/docker.war"
+    	# commandstr += " " + imagename
+
     	# result = os.popen('docker images ' + imagename + '|wc -l')
-    	# count = int(result.read().strip())
-    	# if count > 1:
-    	# 	print('image %s Found' % imagename)
-    	# 	return True
-    	# else:
-    	# 	print('image %s Not Found' % imagename)
-    	# 	return False   
+    	# # count = int(result.read().strip())
+    	# # if count > 1:
+    	# # 	print('image %s Found' % imagename)
+    	# # 	return True
+    	# # else:
+    	# # 	print('image %s Not Found' % imagename)
+    	# # 	return False   
 	##  deploy to new
     def deployToNew(war,imagename,port,cname):
-    	print("deploy to new done")
-    	# result = os.popen('docker images ' + imagename + '|wc -l')
-    	# count = int(result.read().strip())
-    	# if count > 1:
-    	# 	print('image %s Found' % imagename)
-    	# 	return True
-    	# else:
-    	# 	print('image %s Not Found' % imagename)
-    	# 	return False
+    	popenlist = ['docker','run','-d','--name']
+    	popenlist.append(cname)
+    	popenlist.append('-p')
+    	popenlist.append(port + ':9080')
+    	popenlist.append('-v')
+    	popenlist.append(war + ':/config/dropins/docker.war')
+    	popenlist.append(imagename)
+
+    	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
+    	lines = p.stdout.readlines()
+    	if len(lines) not 1:
+    		print('Container create Failed')
+    		sys.exit(1)
+    	for line in lines:
+    		linestr = bytes.decode(line)
+    		result = os.popen('docker inspect ' + linestr)
+    		jsonstr = result.read().strip()[1:-1]
+    		jsonobj = json.loads(jsonstr)
+    		print('Container %s start OK' % getName(jsonobj))
+ 
 
     def getContainerNamesPorts():
     	p = Popen(['docker', 'ps', '-aq'],stdout=PIPE,stderr=PIPE)
