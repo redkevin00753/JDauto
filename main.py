@@ -31,6 +31,7 @@ def getAvailablePort():
 	for port in range(Config.FROM_PORT,Config.TO_PORT):
 		if port not in portlist:
 			if OS.IsNotUse(port):
+				print('Got one available Port %d' % port)
 				return(port)
 				break
 	print("can not get a available port !!!")
