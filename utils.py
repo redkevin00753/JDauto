@@ -44,7 +44,7 @@ class Docker(object):
     	popenlist.append('-v')
     	popenlist.append(war + ':/config/dropins/docker.war')
     	popenlist.append(imagename)
-
+        print(popenlist)
     	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
     	print(lines)
