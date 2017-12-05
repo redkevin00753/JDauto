@@ -16,11 +16,13 @@ def main():
 	print('Exists Container names : %s ' % namelist)
 	print('Exists Container ports : %s ' % portlist)
 	if CONTAINER_NAME in namelist:
+		print("Will deploy to exist container %s" % CONTAINER_NAME)
 		if not OS.IsWarThere(WAR_PATH):
 			sys.exit(1)
 		Docker.deployToExist(WAR_PATH,CONTAINER_NAME)
 		sys.exit(0)
 	else:
+		print("Will deploy to new container %s" % CONTAINER_NAME)
 		if Docker.checkImageNames(IMAGE_NAME) and OS.IsWarThere(WAR_PATH):
 			Docker.deployToNew(WAR_PATH,IMAGE_NAME,getAvailablePort(portlist),CONTAINER_NAME)
 		else:

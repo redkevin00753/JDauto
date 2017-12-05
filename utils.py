@@ -70,10 +70,10 @@ class OS(object):
 		try:
 			s.connect((ip,int(port)))
 			s.shutdown(2)
-			print('Port %d is used' % port)
+			# print('Port %d is used' % port)
 			return False
 		except:
-			print('Port %d is not used' % port)
+			# print('Port %d is not used' % port)
 			return True
 	def IsWarThere(path):
 		isexists = os.path.exists(path)
