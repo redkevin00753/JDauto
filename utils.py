@@ -52,10 +52,17 @@ class Docker(object):
     		sys.exit(1)
     	for line in lines:
     		linestr = bytes.decode(line)
-    		result = os.popen('docker inspect ' + linestr)
-    		jsonstr = result.read().strip()[1:-1]
-    		jsonobj = json.loads(jsonstr)
-    		print('Container %s start OK' % Docker.getName(jsonobj))
+    		containerName,containerPorts = Docker.getCNameAndPort(cname)
+    		print('Container %s Build OK on Port %s 'containerName,containerPorts)
+    		
+
+    # Get Container name and port
+    def getCNameAndPort(cname):
+    	result = os.popen('docker inspect ' + cname)
+    	jsonstr = result.read().strip()[1:-1]
+    	jsonobj = json.loads(jsonstr)
+    	return Docker.getName(jsonobj),Docker.getPorts(jsonobj)
+
     # Get Depolyed URLs from log
     def getDeployURLs(host,port,cname):
     	urllist = []
