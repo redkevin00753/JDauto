@@ -15,6 +15,7 @@ def main():
 	namelist,portlist = Docker.getContainerNamesPorts()
 	print('Exists Container names : %s ' % namelist)
 	print('Exists Container ports : %s ' % portlist)
+	print('Build container with name -> %s' % CONTAINER_NAME)
 	if CONTAINER_NAME in namelist:
 		print("Will deploy to exist container %s" % CONTAINER_NAME)
 		if not OS.IsWarThere(WAR_PATH):

@@ -1,0 +1,336 @@
+<server description="new server">
+
+    <featureManager>
+<!--         <feature>jsp-2.2</feature> -->
+        <feature>localConnector-1.0</feature>
+        <feature>json-1.0</feature>
+        <feature>jaxrs-1.1</feature>
+        <feature>jdbc-4.0</feature>
+        <feature>blueprint-1.0</feature>
+        <feature>jpa-2.0</feature>
+        <feature>ejbLite-3.1</feature>
+        <!-- 
+        <feature>ssl-1.0</feature>
+		<feature>wsSecurity-1.1</feature> -->
+        <feature>jaxws-2.2</feature>
+        <feature>cdi-1.0</feature>
+        <feature>jsp-2.2</feature>
+        <feature>jsf-2.0</feature>
+    </featureManager>
+
+	<sslDefault sslRef="defaultSSLConfig"/>
+	<ssl id="defaultSSLConfig" keyStoreRef="defaultKeyStore" trustStoreRef="defaultTrustStore"/>
+	<keyStore id="defaultKeyStore" location="/opt/ibm/wlp/usr/servers/defaultServer/resources/security/myKey.jks" password="{xor}Lz4sLChvLTs=" type="jks"/>
+	<keyStore id="defaultTrustStore" location="/opt/ibm/wlp/usr/servers/defaultServer/resources/security/myKey.jks" password="{xor}Lz4sLChvLTs=" type="jks"/>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+
+    <applicationMonitor updateTrigger="mbean"/>
+    
+    <!-- Rewrite IL server -->
+	<!--
+    <dataSource id="prod.ref" jndiName="jdbc/services_epricer_v2_ctmprefDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="db444"/>
+    	<properties.db2.jcc databaseName="CTMPREF" password="{xor}KW48KzAtNj4=" portNumber="60018" serverName="inmbz1070.in.dst.ibm.com" user="db444"/>
+    </dataSource>
+    
+    <dataSource id="prod.pri" jndiName="jdbc/services_epricer_v2_ctmppriDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="db444"/>
+    	<properties.db2.jcc databaseName="CTMPPRI" password="{xor}KW48KzAtNj4=" portNumber="60018" serverName="inmbz1070.in.dst.ibm.com" user="db444"/>
+    </dataSource>
+    
+    <dataSource id="prod.tx" jndiName="jdbc/services_epricer_v2_txdbDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="projuser"/> 
+    	<properties.db2.jcc databaseName="TXDB" password="{xor}KW48KzAtNj4=" portNumber="60006" serverName="inmbz1072.in.dst.ibm.com" user="projuser"/>
+    </dataSource>
+
+	<dataSource id="prod.cus" jndiName="jdbc/services_epricer_v2_ctmpcusDS" type="javax.sql.ConnectionPoolDataSource">
+		<jdbcDriver>
+			<library>
+				<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+			</library>
+		</jdbcDriver>
+		<connectionManager/>
+		<containerAuthData password="{xor}KW48KzAtNj4=" user="db445"/>
+		<properties.db2.jcc databaseName="CTMPCUS" password="{xor}KW48KzAtNj4=" portNumber="60018" serverName="9.121.56.70" user="db445"/>
+	</dataSource>
+    
+    <dataSource id="prod.doc" jndiName="jdbc/services_epricer_v2_ctmpdocDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="db445"/>
+    	<properties.db2.jcc databaseName="CTMPDOC" password="{xor}KW48KzAtNj4=" portNumber="60018" serverName="9.121.56.70" user="db445"/>
+	</dataSource>
+    -->
+     <!-- Rewrite CDT server START -->
+<!--  
+     <dataSource id="prod.tx" jndiName="jdbc/services_epricer_v2_txdbDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}Oi8taygtNis=" user="epriwrit"/>
+    	<properties.db2.jcc databaseName="TXDB" password="{xor}Oi8taygtNis=" portNumber="60006" serverName="mkmpgz2131.cloud.dst.ibm.com" user="epriwrit"/>
+    </dataSource>
+    
+    <dataSource id="prod.ref" jndiName="jdbc/services_epricer_v2_ctmprefDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}FR4Rb2xtFGc=" user="epriwrit"/>
+    	<properties.db2.jcc databaseName="CTMPREF" password="{xor}FR4Rb2xtFGc=" portNumber="3808" serverName="mkmpgz2133.cloud.dst.ibm.com" user="epriwrit"/>
+    </dataSource>
+    
+    <dataSource id="prod.pri" jndiName="jdbc/services_epricer_v2_ctmppriDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}FR4Rb2xtFGc=" user="epriwrit"/>
+    	<properties.db2.jcc databaseName="CTMPPRI" password="{xor}FR4Rb2xtFGc=" portNumber="3808" serverName="mkmpgz2133.cloud.dst.ibm.com" user="epriwrit"/>
+    </dataSource>
+    
+    <dataSource id="prod.cus" jndiName="jdbc/services_epricer_v2_ctmpcusDS" type="javax.sql.ConnectionPoolDataSource">
+		<jdbcDriver>
+			<library>
+				<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+			</library>
+		</jdbcDriver>
+		<connectionManager/>
+		<containerAuthData password="{xor}FR4Rb2xtFGc=" user="epriwrit"/>
+		<properties.db2.jcc databaseName="CTMPCUS" password="{xor}FR4Rb2xtFGc=" portNumber="3808" serverName="mkmpgz2133.cloud.dst.ibm.com" user="epriwrit"/>
+	</dataSource>
+    
+    <dataSource id="prod.doc" jndiName="jdbc/services_epricer_v2_ctmpdocDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}FR4Rb2xtFGc=" user="epriwrit"/>
+    	<properties.db2.jcc databaseName="CTMPDOC" password="{xor}FR4Rb2xtFGc=" portNumber="3808" serverName="mkmpgz2133.cloud.dst.ibm.com" user="epriwrit"/>
+    </dataSource>
+-->
+    <!-- Rewrite CDT server END-->
+    
+    <!-- RW CDT MAINT START  -->
+      <!-- 
+     <dataSource id="prod.ref" jndiName="jdbc/services_epricer_v2_ctmprefDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	
+    	<containerAuthData password="inn1vate" user="epappusr"/>
+    	<properties.db2.jcc databaseName="CTMPREF" password="inn1vate" portNumber="3735" serverName="mkmpgz2144.toronto.ca.ibm.com" user="epappusr"/>
+   		
+    </dataSource>
+    
+    <dataSource id="prod.pri" jndiName="jdbc/services_epricer_v2_ctmppriDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="inn1vate" user="epappusr"/>
+    	<properties.db2.jcc databaseName="CTMPPRI" password="inn1vate" portNumber="3715" serverName="mkmpgz2144.toronto.ca.ibm.com" user="epappusr"/>
+    </dataSource>
+    
+    <dataSource id="prod.tx" jndiName="jdbc/services_epricer_v2_txdbDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	
+    	<containerAuthData password="inn1vate" user="epappusr"/>
+    	<properties.db2.jcc databaseName="TXDB" password="inn1vate" portNumber="3755" serverName="mkmpgz2144.toronto.ca.ibm.com" user="epappusr"/>
+    	
+    </dataSource>
+
+	<dataSource id="prod.cus" jndiName="jdbc/services_epricer_v2_ctmpcusDS" type="javax.sql.ConnectionPoolDataSource">
+		<jdbcDriver>
+			<library>
+				<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+			</library>
+		</jdbcDriver>
+		<connectionManager/>
+		<containerAuthData password="inn1vate" user="epappusr"/>
+		<properties.db2.jcc databaseName="CTMPCUS" password="inn1vate" portNumber="3745" serverName="mkmpgz2144.toronto.ca.ibm.com" user="epappusr"/>
+	</dataSource>
+    
+    <dataSource id="prod.doc" jndiName="jdbc/services_epricer_v2_ctmpdocDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="inn1vate" user="epappusr"/>
+    	<properties.db2.jcc databaseName="CTMPDOC" password="inn1vate" portNumber="3720" serverName="mkmpgz2144.toronto.ca.ibm.com" user="epappusr"/>
+	</dataSource>
+	    -->
+    <!-- RW CDT MAINT END -->
+    
+    <!-- LOCAL server start -->
+    <!--  
+         <dataSource id="prod.tx" jndiName="jdbc/services_epricer_v2_txdbDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="work4epr" user="epricer"/>
+    	<properties.db2.jcc databaseName="TXDB" password="work4epr" portNumber="60000" serverName="9.119.110.47" user="epricer"/>
+    </dataSource>
+    
+    <dataSource id="prod.ref" jndiName="jdbc/services_epricer_v2_ctmprefDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="work4epr" user="epricer"/>
+    	<properties.db2.jcc databaseName="CTMPREF" password="work4epr" portNumber="60000" serverName="9.119.110.47" user="epricer"/>
+    </dataSource>
+    
+    <dataSource id="prod.pri" jndiName="jdbc/services_epricer_v2_ctmppriDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="work4epr" user="epricer"/>
+    	<properties.db2.jcc databaseName="CTMPPRI" password="work4epr" portNumber="60000" serverName="9.119.110.47" user="epricer"/>
+    </dataSource>
+    
+    <dataSource id="prod.cus" jndiName="jdbc/services_epricer_v2_ctmpcusDS" type="javax.sql.ConnectionPoolDataSource">
+		<jdbcDriver>
+			<library>
+				<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+			</library>
+		</jdbcDriver>
+		<connectionManager/>
+		<containerAuthData password="work4epr" user="epricer"/>
+		<properties.db2.jcc databaseName="CTMPCUS" password="work4epr" portNumber="60000" serverName="9.119.110.47" user="epricer"/>
+	</dataSource>
+    
+    <dataSource id="prod.doc" jndiName="jdbc/services_epricer_v2_ctmpdocDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="work4epr" user="epricer"/>
+    	<properties.db2.jcc databaseName="CTMPDOC" password="work4epr" portNumber="60000" serverName="9.119.110.47" user="epricer"/>
+    </dataSource>
+    -->
+    <!-- LOCAL server end -->
+    
+    <!-- Rewrite CR DB (John) start -->
+
+    <dataSource id="prod.ref" jndiName="jdbc/services_epricer_v2_ctmprefDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="projuser"/>
+    	<properties.db2.jcc databaseName="CTMPREF" password="{xor}KW48KzAtNj4=" portNumber="60000" serverName="inmbz1070.in.dst.ibm.com" user="projuser"/>
+    </dataSource>
+
+    <dataSource id="prod.pri" jndiName="jdbc/services_epricer_v2_ctmppriDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="projuser"/>
+    	<properties.db2.jcc databaseName="CTMPPRI" password="{xor}KW48KzAtNj4=" portNumber="60000" serverName="inmbz1070.in.dst.ibm.com" user="projuser"/>
+    </dataSource>
+
+    <dataSource id="prod.txdb" jndiName="jdbc/services_epricer_v2_txdbDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="projuser"/>
+    	<properties.db2.jcc databaseName="TXDB" password="{xor}KW48KzAtNj4=" portNumber="60015" serverName="inmbz1072.in.dst.ibm.com" user="projuser"/>
+    </dataSource>
+
+    <dataSource id="prod.cus" jndiName="jdbc/services_epricer_v2_ctmpcusDS" type="javax.sql.ConnectionPoolDataSource">
+	<jdbcDriver>
+		<library>
+			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+		</library>
+	</jdbcDriver>
+	<connectionManager/>
+	<containerAuthData password="{xor}KW48KzAtNj4=" user="projuser"/>
+	<properties.db2.jcc databaseName="CTMPCUS" password="{xor}KW48KzAtNj4=" portNumber="60000" serverName="inmbz1070.in.dst.ibm.com" user="projuser"/>
+	</dataSource>
+
+	<dataSource id="prod.doc" jndiName="jdbc/services_epricer_v2_ctmpdocDS" type="javax.sql.ConnectionPoolDataSource">
+    	<jdbcDriver>
+    		<library>
+    			<fileset dir="${WORKSPACE}/ePricerLib" includes="db2jcc4.jar, db2jcc_license_cisuz.jar, db2jcc_license_cu.jar"/>
+    		</library>
+    	</jdbcDriver>
+    	<connectionManager/>
+    	<containerAuthData password="{xor}KW48KzAtNj4=" user="projuser"/>
+    	<properties.db2.jcc databaseName="CTMPDOC" password="{xor}KW48KzAtNj4=" portNumber="60000" serverName="inmbz1070.in.dst.ibm.com" user="projuser"/>
+	</dataSource>
+    
+    <!-- Rewrite CR DB (John) end -->
+    <variable name="WORKSPACE" value="/tmp"/>
+    <library id="EPLIB">
+    	<fileset dir="${WORKSPACE}/ePricerLib"/>
+    </library>
+    <dataSource id="REFDB2" jndiName="stag_db_refp">
+    	<jdbcDriver>
+            <library/>
+        </jdbcDriver>
+    </dataSource>
+</server>
