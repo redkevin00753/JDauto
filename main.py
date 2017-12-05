@@ -22,11 +22,11 @@ def main():
 		sys.exit(0)
 	else:
 		if Docker.checkImageNames(IMAGE_NAME) and OS.IsWarThere(WAR_PATH):
-			Docker.deployToNew(WAR_PATH,IMAGE_NAME,getAvailablePort(),CONTAINER_NAME)
+			Docker.deployToNew(WAR_PATH,IMAGE_NAME,getAvailablePort(portlist),CONTAINER_NAME)
 		else:
 			sys.exit(1)
 
-def getAvailablePort():
+def getAvailablePort(portlist):
 	print("check port from " + str(Config.FROM_PORT) + " to " + str(Config.TO_PORT))
 	for port in range(Config.FROM_PORT,Config.TO_PORT):
 		if port not in portlist:
