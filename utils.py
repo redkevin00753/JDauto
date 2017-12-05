@@ -76,8 +76,8 @@ class OS(object):
 			print('Port %d is not used' % port)
 			return True
 	def IsWarThere(path):
-		isexists = os.path.exists('d:/assist/getTeacherList.py')
-		# os.path.isfile('d:/assist/getTeacherList.py')
+		isexists = os.path.exists(path)
+		# os.path.isfile(path)
 		if isexists:
 			print('war exists')
 			return True

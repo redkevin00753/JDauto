@@ -13,7 +13,8 @@ def main():
 	CONTAINER_NAME = sys.argv[3]
 
 	namelist,portlist = Docker.getContainerNamesPorts()
-	print(namelist,portlist)
+	print('Exists Container names : %s ' % namelist)
+	print('Exists Container ports : %s ' % portlist)
 	if CONTAINER_NAME in namelist:
 		if not OS.IsWarThere(WAR_PATH):
 			sys.exit(1)
