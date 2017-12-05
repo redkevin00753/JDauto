@@ -22,12 +22,13 @@ def main():
 			sys.exit(1)
 		Docker.deployToExist(WAR_PATH,CONTAINER_NAME)
 	else:
+		availablePort = getAvailablePort(portlist)
 		print("Will deploy to new container %s" % CONTAINER_NAME)
 		if Docker.checkImageNames(IMAGE_NAME) and OS.IsWarThere(WAR_PATH):
-			Docker.deployToNew(WAR_PATH,IMAGE_NAME,getAvailablePort(portlist),CONTAINER_NAME)
+			Docker.deployToNew(WAR_PATH,IMAGE_NAME,availablePort,CONTAINER_NAME)
 		else:
 			sys.exit(1)
-	getDeployURLs(CONTAINER_NAME)
+	Docker.getDeployURLs(Config.HOST_URL,availablePort,CONTAINER_NAME)
 
 def getAvailablePort(portlist):
 	print("-> check ports from " + str(Config.FROM_PORT) + " to " + str(Config.TO_PORT))

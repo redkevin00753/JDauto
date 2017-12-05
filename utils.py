@@ -3,6 +3,7 @@ import os
 import socket
 import json
 import sys
+import re
 from subprocess import Popen, PIPE
 
 class Docker(object):
@@ -56,12 +57,18 @@ class Docker(object):
     		jsonobj = json.loads(jsonstr)
     		print('Container %s start OK' % Docker.getName(jsonobj))
     # Get Depolyed URLs from log
-    def getDeployURLs(cname):
-    	p = Popen(['docker','logs',cname,'|','grep','Web application available (default_host)'],stdout=PIPE,stderr=PIPE)
+    def getDeployURLs(host,port,cname):
+    	urllist = []
+    	p = Popen(['docker','logs',cname],stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
     	for line in lines:
     		linestr = bytes.decode(line)
-    		print(linestr)
+    		urlstr = re.match('.*Web application available \(default_host\).*:[0-9]*/(.*)/\n',linestr,re.S)
+    		if urlstr:
+    			urllist.append(host+':'+str(port)+'/'+urlstr.group(1))
+    	s = set(urllist)
+    	for a in s:
+    		print(a)
 
 
     def getContainerNamesPorts():
