@@ -2,6 +2,7 @@
 import os
 import socket
 import json
+import sys
 from subprocess import Popen, PIPE
 
 class Docker(object):
@@ -46,6 +47,7 @@ class Docker(object):
 
     	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
+    	print(lines)
     	if len(lines) != 1:
     		print('Container create Failed')
     		sys.exit(1)
