@@ -39,7 +39,7 @@ class Docker(object):
     	popenlist = ['docker','run','-d','--name']
     	popenlist.append(cname)
     	popenlist.append('-p')
-    	popenlist.append(port + ':9080')
+    	popenlist.append(str(port) + ':9080')
     	popenlist.append('-v')
     	popenlist.append(war + ':/config/dropins/docker.war')
     	popenlist.append(imagename)
