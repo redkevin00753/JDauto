@@ -46,7 +46,7 @@ class Docker(object):
 
     	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
-    	if len(lines) not 1:
+    	if len(lines) != 1:
     		print('Container create Failed')
     		sys.exit(1)
     	for line in lines:
