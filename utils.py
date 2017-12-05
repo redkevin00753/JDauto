@@ -45,7 +45,7 @@ class Docker(object):
     	popenlist.append(war + ':/config/dropins/docker.war')
     	popenlist.append(imagename)
     	print(popenlist)
-    	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
+    	p = Popen(['docker', 'run', '-d', '--name', 'origin/master', '-p', '9002:9080', '-v', '/var/lib/jenkins/workspace/kevinAuto/projects/epricer-tool/target/epricertools.war:/config/dropins/docker.war', 'websphere-liberty'],stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
     	print(lines)
     	if len(lines) != 1:
