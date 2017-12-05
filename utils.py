@@ -55,7 +55,14 @@ class Docker(object):
     		jsonstr = result.read().strip()[1:-1]
     		jsonobj = json.loads(jsonstr)
     		print('Container %s start OK' % Docker.getName(jsonobj))
- 
+    # Get Depolyed URLs from log
+    def getDeployURLs(cname):
+    	p = Popen(['docker','logs',cname,'|','grep','Web application available (default_host)'],stdout=PIPE,stderr=PIPE)
+    	lines = p.stdout.readlines()
+    	for line in lines:
+    		linestr = bytes.decode(line)
+    		print(linestr)
+
 
     def getContainerNamesPorts():
     	p = Popen(['docker', 'ps', '-aq'],stdout=PIPE,stderr=PIPE)
