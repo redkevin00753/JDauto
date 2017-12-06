@@ -45,8 +45,8 @@ class Docker(object):
     		
     # Kill and Remove container
     def killAndRmContainer(cname):
-    	os.popen('docker kill ' + cname)
-    	os.popen('docker rm -f ' + cname)
+    	p = Popen(['docker','rm','-f',cname],stdout=PIPE,stderr=PIPE)
+    	p.wait()
 
     # Get Container name inspect as json object 
     def getCinspect2JsonObj(cname):
@@ -69,6 +69,7 @@ class Docker(object):
     		if re.search(r'The server defaultServer is ready to run a smarter planet',linestr):
     			flag = False
     	s = set(urllist)
+    	print('Depolyed URLs :<br/>')
     	for a in s:
     		print(a + '<br/>')
 
