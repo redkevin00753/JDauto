@@ -20,9 +20,9 @@ class Docker(object):
     		return False
 	##  deploy to exist
     def deployToExist(war,cname):
-    	Docker.killAndRmContainer(cname)
     	image = Docker.getImage(cname)
     	port = Docker.getPorts(cname)[0]
+    	Docker.killAndRmContainer(cname)
     	Docker.deployToNew(war,image,port,cname)
 
 	##  deploy to new
@@ -37,16 +37,16 @@ class Docker(object):
     	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
     	if len(lines) != 1:
-    		print('Container create Failed')
+    		print('Container create Failed <br/>')
     		sys.exit(1)
     	for line in lines:
     		linestr = bytes.decode(line)
-    		print('Container %s Build OK on Port %s ' % (Docker.getName(linestr),Docker.getPorts(linestr)[0]))
+    		print('Container %s Build OK <br/>' % Docker.getName(linestr))
     		
     # Kill and Remove container
     def killAndRmContainer(cname):
     	os.popen('docker kill ' + cname)
-    	os.popen('docker rm ' + cname)
+    	os.popen('docker rm -f ' + cname)
 
     # Get Container name inspect as json object 
     def getCinspect2JsonObj(cname):
@@ -70,7 +70,7 @@ class Docker(object):
     			flag = False
     	s = set(urllist)
     	for a in s:
-    		print(a)
+    		print(a + '<br/>')
 
     def getContainerNamesPorts():
     	p = Popen(['docker', 'ps', '-aq'],stdout=PIPE,stderr=PIPE)
@@ -114,9 +114,9 @@ class OS(object):
 		isexists = os.path.exists(path)
 		# os.path.isfile(path)
 		if isexists:
-			print('-> war %s OK' % path)
+			print('-> war File OK <br/>')
 			return True
 		else:
-			print('-> war %s missing' % path)
+			print('-> war %s missing <br/>' % path)
 			return False
     	
