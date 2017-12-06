@@ -20,22 +20,11 @@ class Docker(object):
     		return False
 	##  deploy to exist
     def deployToExist(war,cname):
-    	print("deploy to exist done")
-    	# docker run -d --name kevineee -p 9001:9080 -v /var/lib/jenkins/workspace/kevinAuto/projects/epricer-tool/target/epricertools.war:/config/dropins/docker.war websphere-liberty
-    	# commandstr = "docker run -d --name "
-    	# commandstr += cname
-    	# commandstr += " -p " + port + ":9080"
-    	# commandstr += " -v " + war +":/config/dropins/docker.war"
-    	# commandstr += " " + imagename
+    	image = getImage(cname)
+    	port = containerPorts[0]
+    	Docker.deployToNew(war,image,port,cname)
 
-    	# result = os.popen('docker images ' + imagename + '|wc -l')
-    	# # count = int(result.read().strip())
-    	# # if count > 1:
-    	# # 	print('image %s Found' % imagename)
-    	# # 	return True
-    	# # else:
-    	# # 	print('image %s Not Found' % imagename)
-    	# # 	return False   
+      
 	##  deploy to new
     def deployToNew(war,imagename,port,cname):
     	popenlist = ['docker','run','-d','--name']
@@ -52,31 +41,32 @@ class Docker(object):
     		sys.exit(1)
     	for line in lines:
     		linestr = bytes.decode(line)
-    		containerName,containerPorts = Docker.getCNameAndPort(cname)
-    		print('Container %s Build OK on Port %s 'containerName,containerPorts)
+    		print('Container %s Build OK on Port %s ' % (Docker.getName(linestr),Docker.getPorts(linestr)[0]))
     		
 
-    # Get Container name and port
-    def getCNameAndPort(cname):
+    # Get Container name inspect as json object 
+    def getCinspect2JsonObj(cname):
     	result = os.popen('docker inspect ' + cname)
     	jsonstr = result.read().strip()[1:-1]
     	jsonobj = json.loads(jsonstr)
-    	return Docker.getName(jsonobj),Docker.getPorts(jsonobj)
+    	return jsonobj
 
     # Get Depolyed URLs from log
     def getDeployURLs(host,port,cname):
     	urllist = []
-    	p = Popen(['docker','logs',cname],stdout=PIPE,stderr=PIPE)
-    	lines = p.stdout.readlines()
-    	for line in lines:
+    	p = Popen(['docker','logs','-f',cname],stdout=PIPE,stderr=PIPE)
+    	flag = True
+    	while flag:
+    		line = p.stdout.readline()
     		linestr = bytes.decode(line)
     		urlstr = re.match('.*Web application available \(default_host\).*:[0-9]*/(.*)/\n',linestr,re.S)
     		if urlstr:
     			urllist.append(host+':'+str(port)+'/'+urlstr.group(1))
+    		if re.search(r'The server defaultServer is ready to run a smarter planet',linestr):
+    			flag = False
     	s = set(urllist)
     	for a in s:
     		print(a)
-
 
     def getContainerNamesPorts():
     	p = Popen(['docker', 'ps', '-aq'],stdout=PIPE,stderr=PIPE)
@@ -85,16 +75,18 @@ class Docker(object):
     	portList=[]
     	for line in lines:
     		linestr = bytes.decode(line)
-    		result = os.popen('docker inspect ' + linestr)
-    		jsonstr = result.read().strip()[1:-1]
-    		jsonobj = json.loads(jsonstr)
-    		nameList.append(Docker.getName(jsonobj))
-    		portList.extend(Docker.getPorts(jsonobj))
+    		nameList.append(Docker.getName(linestr))
+    		portList.extend(Docker.getPorts(linestr))
     	portList.sort()
     	return nameList,portList
-    def getName(json):
+    def getImage(cname):
+    	json = Docker.getCinspect2JsonObj(cname)
+    	return json['Image']
+    def getName(cname):
+    	json = Docker.getCinspect2JsonObj(cname)
     	return json['Name'][1:]
-    def getPorts(json):
+    def getPorts(cname):
+    	json = Docker.getCinspect2JsonObj(cname)
     	items = json['HostConfig']['PortBindings']
     	plist = []
     	for item in items:
