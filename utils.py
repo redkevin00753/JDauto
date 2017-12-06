@@ -20,11 +20,11 @@ class Docker(object):
     		return False
 	##  deploy to exist
     def deployToExist(war,cname):
-    	image = getImage(cname)
-    	port = containerPorts[0]
+    	Docker.killAndRmContainer(cname)
+    	image = Docker.getImage(cname)
+    	port = Docker.getPorts(cname)[0]
     	Docker.deployToNew(war,image,port,cname)
 
-      
 	##  deploy to new
     def deployToNew(war,imagename,port,cname):
     	popenlist = ['docker','run','-d','--name']
@@ -43,6 +43,10 @@ class Docker(object):
     		linestr = bytes.decode(line)
     		print('Container %s Build OK on Port %s ' % (Docker.getName(linestr),Docker.getPorts(linestr)[0]))
     		
+    # Kill and Remove container
+    def killAndRmContainer(cname):
+    	os.popen('docker kill ' + cname)
+    	os.popen('docker rm ' + cname)
 
     # Get Container name inspect as json object 
     def getCinspect2JsonObj(cname):
