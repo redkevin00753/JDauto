@@ -13,10 +13,10 @@ class Docker(object):
     	result = os.popen('docker images ' + imagename + '|wc -l')
     	count = int(result.read().strip())
     	if count > 1:
-    		print('-> image %s OK' % imagename)
+    		print('-> image %s OK <br/>' % imagename)
     		return True
     	else:
-    		print('-> image %s Not Found' % imagename)
+    		print('-> image %s Not Found <br/>' % imagename)
     		return False
 	##  deploy to exist
     def deployToExist(war,cname):
