@@ -9,19 +9,19 @@ from subprocess import Popen, PIPE
 class Docker(object):
     """ Docker metheds """
     ##  check if image exist
-	def checkImageName(imagename):
-		imagelist = os.popen('docker images | awk \'{print($1":"$2)}\'')
-		line = imagelist.readline().strip()
-		while line:
-			notag = ""
-			if line[-6:] == "latest":
-				notag = line[:-7]
-			if imagename == line or imagename == notag:
-				print('-> image %s OK <br/>' % imagename)
-				return True
-			line = imagelist.readline().strip()
-		print('-> image %s Not Found <br/>' % imagename)
-		return False
+    def checkImageName(imagename):
+    	imagelist = os.popen('docker images | awk \'{print($1":"$2)}\'')
+    	line = imagelist.readline().strip()
+    	while line:
+    		notag = ""
+    		if line[-6:] == "latest":
+    			notag = line[:-7]
+    			if imagename == line or imagename == notag:
+    				print('-> image %s OK <br/>' % imagename)
+    				return True
+    	line = imagelist.readline().strip()
+    	print('-> image %s Not Found <br/>' % imagename)
+    	return False
 	##  deploy to exist
     def deployToExist(war,cname):
     	image = Docker.getImage(cname)
