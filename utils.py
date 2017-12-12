@@ -23,6 +23,8 @@ class Docker(object):
     	image = Docker.getImage(cname)
     	port = Docker.getPorts(cname)[0]
     	Docker.killAndRmContainer(cname)
+    	print('-> will reuse image %s <br/>' % image)
+    	print('-> will reuse port %d <br/>' % port)
     	Docker.deployToNew(war,image,port,cname)
 
 	##  deploy to new
