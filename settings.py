@@ -2,6 +2,6 @@
 
 class Config(object):
     """docstring for RedisConfig"""
-    HOST_URL = 'http://9.119.110.47'
+    VOLUME_BASE ='/tmp/'
     FROM_PORT = 9000
     TO_PORT = 10000

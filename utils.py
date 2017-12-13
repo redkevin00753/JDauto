@@ -3,6 +3,7 @@ import os
 import socket
 import json
 import sys
+import shutil
 import re
 from subprocess import Popen, PIPE
 
@@ -14,40 +15,39 @@ class Docker(object):
     	line = imagelist.readline().strip()
     	while line:
     		notag = ""
+    		print(line)
     		if line[-6:] == "latest":
     			notag = line[:-7]
     			if imagename == line or imagename == notag:
-    				print('-> image %s OK <br/>' % imagename)
+    				print('-> image %s OK ' % imagename)
     				return True
     	line = imagelist.readline().strip()
-    	print('-> image %s Not Found <br/>' % imagename)
+    	print('-> image %s Not Found ' % imagename)
     	return False
 	##  deploy to exist
-    def deployToExist(war,cname):
-    	image = Docker.getImage(cname)
+    def deployToExist(imagename,cname,voloum):
     	port = Docker.getPorts(cname)[0]
     	Docker.killAndRmContainer(cname)
-    	print('-> will reuse image %s <br/>' % image)
-    	print('-> will reuse port %d <br/>' % port)
-    	Docker.deployToNew(war,image,port,cname)
+    	print('-> will reuse port %d ' % port)
+    	Docker.deployToNew(imagename,port,cname,voloum)
 
 	##  deploy to new
-    def deployToNew(war,imagename,port,cname):
+    def deployToNew(imagename,port,cname,voloum):
     	popenlist = ['docker','run','-d','--name']
     	popenlist.append(cname)
     	popenlist.append('-p')
     	popenlist.append(str(port) + ':9080')
     	popenlist.append('-v')
-    	popenlist.append(war + ':/config/dropins/docker.war')
+    	popenlist.append(voloum + ':/config/dropins/')
     	popenlist.append(imagename)
     	p = Popen(popenlist,stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
     	if len(lines) != 1:
-    		print('Container create Failed <br/>')
+    		print('Container create Failed ')
     		sys.exit(1)
     	for line in lines:
     		linestr = bytes.decode(line)
-    		print('Container %s Build OK <br/>' % Docker.getName(linestr))
+    		print('Container %s Build OK ' % Docker.getName(linestr))
     		
     # Kill and Remove container
     def killAndRmContainer(cname):
@@ -61,24 +61,6 @@ class Docker(object):
     	jsonobj = json.loads(jsonstr)
     	return jsonobj
 
-    # Get Depolyed URLs from log
-    def getDeployURLs(host,port,cname):
-    	urllist = []
-    	p = Popen(['docker','logs','-f',cname],stdout=PIPE,stderr=PIPE)
-    	flag = True
-    	while flag:
-    		line = p.stdout.readline()
-    		linestr = bytes.decode(line)
-    		urlstr = re.match('.*Web application available \(default_host\).*:[0-9]*/(.*)/\n',linestr,re.S)
-    		if urlstr:
-    			urllist.append(host+':'+str(port)+'/'+urlstr.group(1))
-    		if re.search(r'The server defaultServer is ready to run a smarter planet',linestr):
-    			flag = False
-    	s = set(urllist)
-    	print('Depolyed URLs :<br/>')
-    	for a in s:
-    		print(a + '<br/>')
-
     def getContainerNamesPorts():
     	p = Popen(['docker', 'ps', '-aq'],stdout=PIPE,stderr=PIPE)
     	lines = p.stdout.readlines()
@@ -90,12 +72,11 @@ class Docker(object):
     		portList.extend(Docker.getPorts(linestr))
     	portList.sort()
     	return nameList,portList
-    def getImage(cname):
-    	json = Docker.getCinspect2JsonObj(cname)
-    	return json['Image']
+
     def getName(cname):
     	json = Docker.getCinspect2JsonObj(cname)
     	return json['Name'][1:]
+
     def getPorts(cname):
     	json = Docker.getCinspect2JsonObj(cname)
     	items = json['HostConfig']['PortBindings']
@@ -117,13 +98,17 @@ class OS(object):
 		except:
 			# print('Port %d is not used' % port)
 			return True
-	def IsWarThere(path):
-		isexists = os.path.exists(path)
+
+	def ContainerFolder(folder):
+		isexists = os.path.exists(folder)
 		# os.path.isfile(path)
 		if isexists:
-			print('-> war File OK <br/>')
+			print('-> Folder OK ')
 			return True
 		else:
-			print('-> war %s missing <br/>' % path)
-			return False
+			result = os.mkdir(folder)
+			print('-> Folder created')
+			return True
+		print('-> Folder check failed ')
+		return False
     	
