@@ -21,7 +21,7 @@ class Docker(object):
     			if imagename == line or imagename == notag:
     				print('-> image %s OK ' % imagename)
     				return True
-    	line = imagelist.readline().strip()
+    		line = imagelist.readline().strip()
     	print('-> image %s Not Found ' % imagename)
     	return False
 	##  deploy to exist
