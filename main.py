@@ -10,6 +10,7 @@ def main():
 	# get params
 	IMAGE_NAME = sys.argv[1]
 	CONTAINER_NAME = sys.argv[2]
+	WORKSPACE_BASE = sys.argv[3]
 	VOLUME_FOLDER = Config.VOLUME_BASE + CONTAINER_NAME
 
 	namelist,portlist = Docker.getContainerNamesPorts()
@@ -25,7 +26,8 @@ def main():
 			Docker.deployToNew(IMAGE_NAME,getAvailablePort(portlist),CONTAINER_NAME,VOLUME_FOLDER)
 		else:
 			sys.exit(1)
-	print("Container Create done , pelase put Xars to Volume")
+	print("Container Create done , Will put Xars to Volume")
+	OS.CopyXars(WORKSPACE_BASE,VOLUME_FOLDER)
 
 
 def getAvailablePort(portlist):
