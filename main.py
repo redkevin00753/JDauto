@@ -13,8 +13,6 @@ def main():
 	VOLUME_FOLDER = VOLUME_BASE + CONTAINER_NAME
 
 	namelist,portlist = Docker.getContainerNamesPorts()
-	print('Exists Container names : %s' % namelist)
-	print('Exists Container ports : %s' % portlist)
 	if CONTAINER_NAME in namelist:
 		print("Will deploy to exist container %s" % CONTAINER_NAME)
 		if Docker.checkImageName(IMAGE_NAME) and OS.ContainerFolder(VOLUME_FOLDER):
