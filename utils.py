@@ -15,7 +15,6 @@ class Docker(object):
     	line = imagelist.readline().strip()
     	while line:
     		notag = ""
-    		print(line)
     		if line[-6:] == "latest":
     			notag = line[:-7]
     			if imagename == line or imagename == notag:
