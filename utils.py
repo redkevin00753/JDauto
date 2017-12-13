@@ -102,6 +102,7 @@ class OS(object):
 		isexists = os.path.exists(folder)
 		# os.path.isfile(path)
 		if isexists:
+			shutil.rmtree(folder)
 			print('-> Folder OK ')
 			return True
 		else:
