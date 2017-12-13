@@ -10,7 +10,7 @@ def main():
 	# get params
 	IMAGE_NAME = sys.argv[1]
 	CONTAINER_NAME = sys.argv[2]
-	VOLUME_FOLDER = VOLUME_BASE + CONTAINER_NAME
+	VOLUME_FOLDER = Config.VOLUME_BASE + CONTAINER_NAME
 
 	namelist,portlist = Docker.getContainerNamesPorts()
 	if CONTAINER_NAME in namelist:
