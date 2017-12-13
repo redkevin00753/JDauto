@@ -113,12 +113,12 @@ class OS(object):
 		return False
 
 	def CopyXars(src,dst):
-		result = os.popen('find ' + src + ' -name *.[w\|e]ar -exec cp \{\} ' + dst + '\\')
-		# os.path.isfile(path)
+		result = os.popen('find ' + src + ' -name *.[w\|e]ar -exec cp {} ' + dst + ' \\;')
 		if result:
 			print('-> Deploy Done ')
 		else:
 			print('-> Deploy Error')
 			sys.exit(1)
+
 
     	
