@@ -40,7 +40,7 @@ def getAvailablePort(portlist):
 	sys.exit(0)
 
 def checkArgs(list):
-	if len(list) == 4:
+	if len(list) == 3:
 		return True
 	else:
 		print("Params Wrong")
