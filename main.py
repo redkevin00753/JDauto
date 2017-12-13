@@ -8,8 +8,8 @@ def main():
 	if not checkArgs(sys.argv):
 		sys.exit(1)
 	# get params
-	IMAGE_NAME = sys.argv[2]
-	CONTAINER_NAME = sys.argv[3]
+	IMAGE_NAME = sys.argv[1]
+	CONTAINER_NAME = sys.argv[2]
 	VOLUME_FOLDER = VOLUME_BASE + CONTAINER_NAME
 
 	namelist,portlist = Docker.getContainerNamesPorts()
