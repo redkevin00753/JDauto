@@ -17,9 +17,9 @@ class Docker(object):
     		notag = ""
     		if line[-6:] == "latest":
     			notag = line[:-7]
-    			if imagename == line or imagename == notag:
-    				print('-> image %s OK ' % imagename)
-    				return True
+    		if imagename == line or imagename == notag:
+    			print('-> image %s OK ' % imagename)
+    			return True
     		line = imagelist.readline().strip()
     	print('-> image %s Not Found ' % imagename)
     	return False
